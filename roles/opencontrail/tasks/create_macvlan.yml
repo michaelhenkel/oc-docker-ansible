@@ -1,0 +1,19 @@
+---
+- name: Create macvlan0 interface (DHCP)
+  template: src=macvlan_dhcp.cfg.j2 dest=/etc/network/interfaces.d/macvlan0.cfg
+  when: MACVLAN_DHCP is defined
+
+- name: Activate macvlan0
+  command: ifup macvlan0
+
+- set_fact:
+    network_string: "{{ ansible_macvlan0['ipv4']['address'] }}/{{ ansible_macvlan0['ipv4']['netmask'] }}"
+
+- set_fact:
+    pref_len: "{{ network_string | ipaddr('prefix') }}"
+
+- name: Set metric for macvlan0
+  command: ip route del "{{ ansible_macvlan0['ipv4']['network'] }}"/"{{ pref_len }}"
+
+- name: Set new route
+  command: ip route add "{{ ansible_macvlan0['ipv4']['network'] }}"/"{{ pref_len }}" dev macvlan0 proto kernel scope link src "{{ ansible_macvlan0['ipv4']['address'] }}" metric 0

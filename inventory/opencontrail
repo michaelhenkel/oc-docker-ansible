@@ -1,0 +1,7 @@
+[localhost]
+localhost
+
+[localhost:vars]
+PHYSICAL_INTERFACE=ens33
+MACVLAN_DHCP=true
+RANGE=192.168.1.200/28

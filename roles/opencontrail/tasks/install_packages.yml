@@ -1,0 +1,23 @@
+---
+
+- name: Install zookeeper
+  apt: name=zookeeper state=present
+
+- name: Install zookeeperd
+  apt: name=zookeeperd state=present
+
+- name: Install git
+  apt: name=git state=present
+
+- name: Setup APT key
+  apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D state=present
+- name: Create Docker source.list
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_lsb.codename }} main' state=present
+- name: Install Docker
+  apt: name=docker-engine state=present
+
+- name: Download docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.8.0/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0770

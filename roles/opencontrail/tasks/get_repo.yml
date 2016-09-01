@@ -1,0 +1,11 @@
+---
+
+- name: get git repo
+  git: repo=https://github.com/michaelhenkel/docker-opencontrail dest=/etc/docker-opencontrail
+  ignore_errors: yes
+
+- name: set host ip
+  lineinfile:
+    dest: /etc/docker-opencontrail/compose/contrail/3.0/common.env
+    regexp: "^HOST_IP="
+    line: "HOST_IP={{ ansible_macvlan0['ipv4']['address'] }}"

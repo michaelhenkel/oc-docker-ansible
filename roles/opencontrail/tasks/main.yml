@@ -1,0 +1,16 @@
+---
+
+- include: install_packages.yml
+
+- include: adjust_configs.yml
+
+- include: create_macvlan.yml
+
+#- name: debug
+#  debug: msg="{{ hostvars[inventory_hostname] }}"
+
+- include: create_docker_networks.yml
+
+- include: get_repo.yml
+
+- include: start_containers.yml

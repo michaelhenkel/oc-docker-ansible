@@ -1,0 +1,15 @@
+---
+
+- name: create internal overlay network
+  command: docker network create -d overlay internal
+  ignore_errors: yes
+
+- set_fact:
+    network_string: "{{ ansible_macvlan0['ipv4']['address'] }}/{{ ansible_macvlan0['ipv4']['netmask'] }}"
+
+- set_fact:
+    pref_len: "{{ network_string | ipaddr('prefix') }}"
+
+- name: create external network
+  command: docker network create -d macvlan --subnet "{{ ansible_macvlan0['ipv4']['network'] }}"/"{{ pref_len }}" --ip-range "{{ RANGE }}" --gateway "{{ ansible_default_ipv4['gateway'] }}" -o parent=macvlan0 ext
+  ignore_errors: yes

@@ -1,0 +1,3 @@
+auto macvlan0
+iface macvlan0 inet dhcp
+pre-up ip link add macvlan0 link {{ PHYSICAL_INTERFACE }} type macvlan mode bridge

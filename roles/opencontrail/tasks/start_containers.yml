@@ -1,0 +1,46 @@
+---
+
+- name: Start contrail-database
+  command: docker-compose -f contrail-database.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start keystone
+  command: docker-compose -f keystone.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start contrail-config
+  command: docker-compose -f contrail-config.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start contrail-analytics
+  command: docker-compose -f contrail-analytics.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start contrail-control
+  command: docker-compose -f contrail-control.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start contrail-webui
+  command: docker-compose -f contrail-webui.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start neutron
+  command: docker-compose -f neutron.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start glance
+  command: docker-compose -f glance.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
+
+- name: Start nova
+  command: docker-compose -f nova.yml up -d
+  args:
+     chdir: /etc/docker-opencontrail/compose/contrail/3.0
